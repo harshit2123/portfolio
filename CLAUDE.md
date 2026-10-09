@@ -34,7 +34,8 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
 All content lives at the top of `js/main.js`:
 - `SOCIALS` — social links (X / LeetCode are commented out, fill in handles)
 - `STOPS` — timeline entries: {year, type: project|work|milestone, when, title, short, text|bullets,
-  stack, links, feat (shows screenshot frame), image, url, note (handwritten margin note, keep rare), now}
+  stack, links, feat (shows screenshot frame), images (list of paths in `images/`), url, note (handwritten margin note, keep rare), now}
+- Pictures live in `images/`. Profile photo is `images/profile.png` (hero in index.html).
 
 ## TODO (placeholders still in the page)
 - Email: replace `your.email@example.com`

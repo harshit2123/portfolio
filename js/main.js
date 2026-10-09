@@ -7,7 +7,7 @@ const SOCIALS = [
 ];
 
 /* short: what shows before opening (keep it under ~8 words)
-   feat: shows a screenshot frame; set image:'file.png' when you have one */
+   feat: shows a screenshot frame; images:['images/file.png', ...] lists its pictures */
 const STOPS = [
   {year:2026, now:true, type:'work', when:'Aug 2025 – now', title:'Software developer @ UNIQODE',
    short:'Shipping features for 60k+ users',
@@ -17,7 +17,7 @@ const STOPS = [
      'Daily email digest on Redis + Celery for ~5,000 users',
      'Threaded comments with @mentions, used by ~20% of users in month one',
      '250+ Datadog tests that cut post-deploy bugs by ~30%'],
-   stack:'Django REST · Angular · Python · Redis · AWS'},
+   stack:'Django REST · Angular · Python · Redis · AWS', feat:true, images:['images/uniqode-values.jpeg']},
 
   {year:2026, type:'project', feat:true, when:'Aug 2026', title:'LLM observability platform',
    short:'A chatbot that logs every model call',
@@ -29,22 +29,23 @@ const STOPS = [
    short:'An AI that tames your LinkedIn inbox',
    text:"Built with Komal Singh. A Chrome extension that sorts invites by intent, labels messages as spam, promo, routine or important, and drafts replies you approve before sending. Your LinkedIn login never leaves the browser.",
    stack:'React · TypeScript · Node · MongoDB · Claude API',
-   url:'lincom', links:[['website ↗','https://lnkd.in/dG-GCdSi'],['chrome store ↗','https://lnkd.in/df9d4U_8']]},
+   images:['images/lincom-dashboard.png','images/lincom-landing.png','images/lincom-extension.jpeg'], url:'lincom', links:[['website ↗','https://lnkd.in/dG-GCdSi'],['chrome store ↗','https://lnkd.in/df9d4U_8']]},
 
   {year:2026, type:'milestone', when:'May 2026', title:'OpenAI Codex hackathon',
    short:'Turned a JS repo into Rust',
    text:"Selected for the Bengaluru edition. Our tool had Codex read a JavaScript codebase, split it into modules, and rewrite each one in idiomatic Rust.",
+   feat:true, images:['images/codex-hackathon-1.jpeg','images/codex-hackathon-2.jpeg'],
    note:'so many builders in one room!'},
 
   {year:2026, type:'milestone', when:'Apr 2026', title:'Agentic AI course',
    short:'8 agent projects in 6 weeks',
-   text:"Built with CrewAI, LangGraph, AutoGen and MCP, including a 44-tool trading floor that runs on its own."},
+   text:"Built with CrewAI, LangGraph, AutoGen and MCP, including a 44-tool trading floor that runs on its own.", feat:true, images:['images/udemy-certificate.jpeg']},
 
   {year:2026, type:'project', feat:true, when:'Feb – Apr 2026', title:'Voice support agent',
    short:'Call it and talk like a human',
    text:"AssemblyAI hears you, GPT-4.1 Mini decides, Cartesia speaks back, fast enough for a normal chat. When it's stuck it hands off to a human, and learns that answer for next time.",
    stack:'Python · LiveKit · Next.js · Node · MongoDB',
-   url:'voice-agent', links:[['demo ↗','https://drive.google.com/file/d/1SDNYdZsG7qbtdjEcDrPLzv7P-iffrnhx/view'],['code ↗','https://github.com/harshit2123/agent-app']]},
+   images:['images/voice-agent.png'], url:'voice-agent', links:[['demo ↗','https://drive.google.com/file/d/1SDNYdZsG7qbtdjEcDrPLzv7P-iffrnhx/view'],['code ↗','https://github.com/harshit2123/agent-app']]},
 
   {year:2025, type:'milestone', when:'May 2025', title:'Graduated, NIT Bhopal',
    short:'Electrical engineer who codes',
@@ -59,7 +60,7 @@ const STOPS = [
    short:'Gemini inside a coding site',
    text:"Chrome extension for the AlgoZenith hackathon. It reads the problem you're on, keeps a chat per problem, and formats code in replies. My most viewed post, by far.",
    stack:'JavaScript · Gemini API · Chrome extension',
-   url:'maang.in', links:[['demo ↗','https://lnkd.in/gEcMK9rG'],['code ↗','https://github.com/harshit2123']]},
+   images:['images/ai-coding-helper.png'], url:'maang.in', links:[['demo ↗','https://lnkd.in/gEcMK9rG'],['code ↗','https://github.com/harshit2123']]},
 
   {year:2024, type:'project', when:'Nov 2024', title:'Whiteboard',
    short:'Draw anything, undo everything',
@@ -90,15 +91,21 @@ const STOPS = [
 ];
 /* ============================= */
 
+/* escape text so content can't inject HTML */
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* label shown on each card's type tag */
 const kindLabel = {project:'project', work:'job', milestone:'milestone'};
-const PLUS = '<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.2 4.5c-.3 5-.2 10 .1 15M4.6 11.8c5-.3 10-.2 15 .2"/></svg>';
+/* hand-drawn + icon; CSS rotates it to × when a card opens */
+const PLUS ='<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.2 4.5c-.3 5-.2 10 .1 15M4.6 11.8c5-.3 10-.2 15 .2"/></svg>';
 
+/* render social links into the contact section */
 document.getElementById('socials').innerHTML = SOCIALS.map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('');
 
+/* build one timeline card; s = stop data, i = index, side = 'l' or 'r' */
 function stop(s, i, side){
   const id = 'stop-' + i;
   const hasBody = s.text || s.bullets || s.stack || s.links || s.feat || s.note;
+  const shots = s.images || [];
   return `<li class="row ${side}${s.now ? ' now' : ''}"><span class="dot" aria-hidden="true"></span>
     <div class="card${s.now ? ' open' : ''}">
       <button class="head" ${hasBody ? `aria-expanded="${!!s.now}" aria-controls="${id}"` : 'disabled style="cursor:default"'}>
@@ -111,7 +118,7 @@ function stop(s, i, side){
         ${s.text ? `<p>${esc(s.text)}</p>` : ''}
         ${s.bullets ? `<ul>${s.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>` : ''}
         ${s.feat ? `<div class="shot"><div class="bar"><i></i><i></i><i></i><span>${esc(s.url||'')}</span></div>
-          <div class="view">${s.image ? `<img src="${esc(s.image)}" alt="Screenshot of ${esc(s.title)}" loading="lazy">` : `<em>screenshot goes here</em>`}</div></div>` : ''}
+          <div class="track">${shots.map(src => `<div class="view"><img src="${esc(src)}" alt="Screenshot of ${esc(s.title)}" loading="lazy"></div>`).join('') || '<div class="view"><em>screenshot goes here</em></div>'}</div></div>` : ''}
         ${s.stack ? `<div class="stack">${esc(s.stack)}</div>` : ''}
         ${s.links ? `<div class="links">${s.links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>` : ''}
         ${s.note ? `<span class="note">${esc(s.note)}</span>` : ''}
@@ -120,6 +127,7 @@ function stop(s, i, side){
 }
 
 const flow = document.getElementById('flow');
+/* draw the timeline for a filter: 'all', 'project', 'work' or 'milestone' */
 function render(f){
   let html = '', y = null, side = 0;
   STOPS.forEach((s, i) => {
@@ -151,31 +159,39 @@ function drawLine(){
   svg.innerHTML = `<path d="${d}" fill="none" stroke="var(--graphite)" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
     <path d="${d}" fill="none" stroke="var(--graphite)" stroke-width="1" stroke-linecap="round" opacity=".35" transform="translate(1.4,1)"/>`;
 }
+/* redraw the pencil line whenever the timeline changes size */
 new ResizeObserver(() => drawLine()).observe(flow);
 
+/* open or close a card when its header is clicked (only cards with a body) */
 flow.addEventListener('click', e => {
   const head = e.target.closest('.head[aria-expanded]'); if (!head) return;
   const card = head.parentElement, open = !card.classList.contains('open');
   card.classList.toggle('open', open); head.setAttribute('aria-expanded', open);
 });
 
+/* filter buttons: mark the pressed one and re-render the timeline */
 document.querySelectorAll('.filter button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('.filter button').forEach(x => x.setAttribute('aria-pressed', x === b));
   render(b.dataset.f);
 }));
 render('all');
+/* web fonts change text size, so redraw the line once they load */
 if (document.fonts) document.fonts.ready.then(drawLine);
 
+/* theme: use the saved choice if there is one, otherwise follow the OS */
 const root = document.documentElement;
 try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch(e){}
+/* flip between light and dark, and remember the choice */
 document.getElementById('themeBtn').addEventListener('click', () => {
   const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   root.dataset.theme = dark ? 'light' : 'dark';
   try { localStorage.setItem('theme', root.dataset.theme); } catch(e){}
 });
 
+/* show a short message in the toast, hidden again after 1.8s */
 const toast = document.getElementById('toast');
 function say(m){ toast.textContent = m; toast.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => toast.hidden = true, 1800); }
+/* copy the email; if the clipboard is blocked, select it so the user can copy by hand */
 document.getElementById('copyBtn').addEventListener('click', () => {
   const el = document.getElementById('email');
   const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); say('selected, press Ctrl+C'); };
