@@ -1,0 +1,401 @@
+<title>Harshit Yadav</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sketchbook on graph paper. A pencil-drawn line snakes down the middle; each stop is a small card that opens on click */
+:root{
+  --bg:#F6F8FB; --grid:rgba(52,98,190,.07); --grid-major:rgba(52,98,190,.13);
+  --ink:#24272D; --graphite:#4A4F58; --muted:#646B76; --faint:#9CA3AE;
+  --paper:#FFFFFF; --accent:#2D5BC9; --shadow:rgba(36,39,45,.85);
+  --hl-project:rgba(45,91,201,.16); --hl-work:rgba(240,190,40,.38); --hl-mile:rgba(230,110,140,.22);
+  --hand:"Kalam","Segoe Print","Bradley Hand","Comic Sans MS",cursive;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14171D; --grid:rgba(150,180,240,.05); --grid-major:rgba(150,180,240,.09);
+  --ink:#E7E9EE; --graphite:#B9BFCA; --muted:#9AA1AD; --faint:#646B77;
+  --paper:#1C2028; --accent:#86A9FF; --shadow:rgba(0,0,0,.6);
+  --hl-project:rgba(134,169,255,.2); --hl-work:rgba(240,190,40,.25); --hl-mile:rgba(240,120,150,.22); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171D; --grid:rgba(150,180,240,.05); --grid-major:rgba(150,180,240,.09);
+  --ink:#E7E9EE; --graphite:#B9BFCA; --muted:#9AA1AD; --faint:#646B77;
+  --paper:#1C2028; --accent:#86A9FF; --shadow:rgba(0,0,0,.6);
+  --hl-project:rgba(134,169,255,.2); --hl-work:rgba(240,190,40,.25); --hl-mile:rgba(240,120,150,.22); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6;
+  background-image:
+    linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),
+    linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px; background-attachment:fixed;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+a{color:var(--accent)}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px}
+.page{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:24px 56px}
+.hand{font-family:var(--hand)}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:var(--hand);font-size:20px}
+.brand svg{width:30px;height:30px}
+.top nav{display:flex;gap:18px;align-items:center;font-family:var(--hand);font-size:18px}
+.top nav a{color:var(--graphite);text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+.theme{background:none;border:0;padding:0;cursor:pointer;color:var(--graphite);width:26px;height:26px}
+.theme svg{width:100%;height:100%}
+
+/* hero */
+.hero{display:flex;align-items:center;gap:36px;margin-top:56px;flex-wrap:wrap}
+.photo{flex:none;width:118px;height:136px;background:var(--paper);padding:6px 6px 20px;transform:rotate(-3deg);
+  box-shadow:0 1px 3px rgba(0,0,0,.12);position:relative}
+.photo::before{content:"";position:absolute;top:-10px;left:38px;width:42px;height:18px;background:rgba(240,200,80,.55);transform:rotate(4deg)}
+.photo div{width:100%;height:100%;display:grid;place-items:center;font-family:var(--hand);font-size:30px;color:var(--faint);
+  background:repeating-linear-gradient(45deg,transparent 0 6px,var(--grid-major) 6px 7px)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-text{flex:1;min-width:0}
+h1{font-family:var(--hand);font-weight:700;font-size:clamp(42px,7vw,64px);line-height:1;margin:0;letter-spacing:-.01em}
+.sub{font-family:var(--hand);font-size:clamp(20px,3vw,26px);color:var(--graphite);margin:8px 0 0}
+.sub mark{background:linear-gradient(transparent 55%,var(--hl-work) 55%);color:inherit;padding:0 2px}
+.one{margin:14px 0 0;max-width:52ch;color:var(--muted)}
+.hero-links{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:16px;font-family:var(--hand);font-size:19px}
+.hero-links a{color:var(--ink);text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 92%/100% 2px no-repeat;padding-bottom:2px}
+.hero-links a:hover{color:var(--accent)}
+.tools{margin-top:18px;font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+
+/* flow */
+.flow-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-top:64px}
+h2{font-family:var(--hand);font-weight:700;font-size:34px;line-height:1.1;margin:0}
+.hint{font-family:var(--hand);font-size:18px;color:var(--muted);margin:4px 0 0}
+.filter{display:flex;flex-wrap:wrap;gap:6px}
+.filter button{font-family:var(--hand);font-size:17px;line-height:1.3;background:none;border:1.5px solid transparent;color:var(--muted);
+  padding:2px 12px;cursor:pointer;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;white-space:nowrap}
+.filter button:hover{color:var(--ink)}
+.filter button[aria-pressed="true"]{color:var(--ink);border-color:var(--graphite);background:var(--paper)}
+
+.flow{position:relative;list-style:none;margin:36px 0 0;padding:0;display:flex;flex-direction:column;gap:22px}
+.flow svg.line{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.row{position:relative;display:grid;grid-template-columns:1fr 48px 1fr;align-items:start}
+.row .dot{grid-column:2;justify-self:center;margin-top:20px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--graphite);position:relative;z-index:1}
+.row.l .card{grid-column:1;grid-row:1}
+.row.r .card{grid-column:3;grid-row:1}
+.row.now .dot{background:var(--accent);border-color:var(--accent);animation:ping 2.2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--hl-project)}100%{box-shadow:0 0 0 12px transparent}}
+.yr{grid-column:1/-1;justify-self:center;position:relative;z-index:1;font-family:var(--hand);font-weight:700;font-size:26px;
+  background:var(--bg);padding:0 12px;line-height:1.2}
+.yr::after{content:"";position:absolute;inset:-4px -2px;border:1.5px solid var(--graphite);border-radius:50% 45% 52% 48%/55% 50% 48% 45%;transform:rotate(-4deg);opacity:.7}
+
+.card{min-width:0;background:var(--paper);border:1.5px solid var(--graphite);
+  border-radius:255px 18px 225px 18px/18px 225px 18px 255px;box-shadow:3px 4px 0 -1px var(--shadow);
+  transition:transform .2s,box-shadow .2s}
+.row.l .card{transform:rotate(-.4deg)} .row.r .card{transform:rotate(.4deg)}
+.card:hover{transform:rotate(0) translateY(-2px);box-shadow:4px 6px 0 -1px var(--shadow)}
+.head{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:2px 12px;width:100%;padding:12px 16px 13px;cursor:pointer}
+.head:focus-visible{outline:2px dashed var(--accent);outline-offset:2px;border-radius:12px}
+.when{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kind{font-family:var(--hand);font-size:14px;color:var(--ink);padding:0 4px;line-height:1.3}
+.kind.project{background:var(--hl-project)} .kind.work{background:var(--hl-work)} .kind.milestone{background:var(--hl-mile)}
+.title{grid-column:1;font-family:var(--hand);font-weight:700;font-size:23px;line-height:1.2;margin-top:2px;text-wrap:balance}
+.short{grid-column:1;font-size:14px;color:var(--muted)}
+.plus{grid-column:2;grid-row:1/4;align-self:center;width:24px;height:24px;color:var(--graphite);transition:transform .25s}
+.card.open .plus{transform:rotate(45deg)}
+
+.body{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .3s ease,visibility .3s}
+.card.open .body{grid-template-rows:1fr;visibility:visible}
+.body > div{min-height:0;overflow:hidden}
+.inner{padding:2px 16px 16px;border-top:1.5px dashed var(--faint);margin:0 12px;padding-inline:4px;padding-top:12px}
+.inner p{margin:0;font-size:14.5px;color:var(--ink)}
+.inner ul{margin:0;padding-left:18px;font-size:14px}
+.inner li{margin:3px 0}
+.stack{margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.links{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 18px;font-family:var(--hand);font-size:18px}
+.links a{white-space:nowrap}
+.note{display:block;margin-top:8px;font-family:var(--hand);font-size:18px;color:#C2512F;transform:rotate(-1.5deg)}
+.shot{margin-top:12px;border:1.5px solid var(--graphite);background:var(--bg);border-radius:6px;overflow:hidden}
+.shot .bar{display:flex;gap:5px;align-items:center;padding:5px 8px;border-bottom:1.5px solid var(--graphite)}
+.shot .bar i{width:7px;height:7px;border-radius:50%;border:1.2px solid var(--graphite)}
+.shot .bar span{margin-left:6px;font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shot .view{aspect-ratio:16/9;max-width:100%;display:grid;place-items:center;background:repeating-linear-gradient(45deg,transparent 0 8px,var(--grid-major) 8px 9px)}
+.shot .view img{width:100%;height:100%;object-fit:cover;display:block}
+.shot .view em{font-family:var(--hand);font-style:normal;font-size:17px;color:var(--faint)}
+
+@media (max-width:720px){
+  .row{grid-template-columns:36px 1fr}
+  .row .dot{grid-column:1}
+  .row.l .card,.row.r .card{grid-column:2;transform:none}
+  .yr{grid-column:1/-1;justify-self:start;margin-left:0}
+}
+
+/* contact */
+.contact{margin-top:72px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+  padding:26px 26px;background:var(--paper);border:1.5px solid var(--graphite);border-radius:18px 225px 18px 255px/255px 18px 225px 18px;box-shadow:3px 4px 0 -1px var(--shadow)}
+.contact h2{font-size:32px}
+.contact p{margin:6px 0 0;color:var(--muted);max-width:42ch}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mail code{font-family:var(--mono);font-size:15px;user-select:all;word-break:break-all}
+.mail button{font-family:var(--hand);font-size:17px;background:none;border:1.5px solid var(--graphite);color:var(--ink);padding:1px 12px;cursor:pointer;border-radius:255px 15px 225px 15px/15px 225px 15px 255px}
+.socials{display:flex;gap:16px;margin-top:10px;font-family:var(--hand);font-size:18px}
+footer{margin-top:28px;font-family:var(--hand);font-size:16px;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) rotate(-1deg);background:var(--paper);color:var(--ink);border:1.5px solid var(--graphite);font-family:var(--hand);font-size:18px;padding:4px 14px;box-shadow:3px 3px 0 -1px var(--shadow)}
+</style>
+
+<div class="page">
+  <div class="top">
+    <a class="brand" href="#" aria-label="Harshit Yadav, home">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 4.5c8-.8 17-.6 26 .2.6 7.5.4 15-.4 22.8-8.3.8-17 .6-25.2-.3C2.6 19.6 2.6 12 3 4.5z"/>
+        <path d="M9 9.5c.2 4.5.1 9-.2 13.5M9 16.4c2.2-.2 4.4-.2 6.6 0M15.8 9.3c-.1 4.6 0 9.2.2 13.7M18.8 9.8l3.2 6 3.4-6.2M22 15.8c.1 2.4 0 4.8-.2 7.2"/>
+      </svg>
+      harshit
+    </a>
+    <nav>
+      <a href="#journey">journey</a>
+      <a href="#contact">say hi</a>
+      <button class="theme" id="themeBtn" aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M20 14.5A8 8 0 0 1 9.5 4c-3.6 1-6 4.2-6 8a8.5 8.5 0 0 0 8.5 8.5c3.8 0 7-2.4 8-6z"/></svg>
+      </button>
+    </nav>
+  </div>
+
+  <header class="hero">
+    <!-- Your photo: replace the inner div with <img src="me.jpg" alt="Harshit Yadav"> -->
+    <div class="photo"><div>HY</div></div>
+    <div class="hero-text">
+      <h1>Harshit Yadav</h1>
+      <p class="sub"><mark>AI full-stack engineer</mark> in Bengaluru</p>
+      <p class="one">I build web apps by day and AI agents by night.</p>
+      <div class="hero-links">
+        <a href="https://www.linkedin.com/in/harshit2123/" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/harshit2123" target="_blank" rel="noopener">github</a>
+        <!-- Replace with your resume PDF -->
+        <a href="https://www.linkedin.com/in/harshit2123/" target="_blank" rel="noopener">resume</a>
+        <a href="#contact">email</a>
+      </div>
+      <div class="tools">python · django · node · react · angular · claude api · langgraph · mcp · aws</div>
+    </div>
+  </header>
+
+  <section id="journey">
+    <div class="flow-head">
+      <div>
+        <h2>The journey so far</h2>
+        <p class="hint">tap any stop to open it ↓</p>
+      </div>
+      <div class="filter" role="group" aria-label="Filter the journey">
+        <button data-f="all" aria-pressed="true">all</button>
+        <button data-f="project" aria-pressed="false">projects</button>
+        <button data-f="work" aria-pressed="false">jobs</button>
+        <button data-f="milestone" aria-pressed="false">milestones</button>
+      </div>
+    </div>
+    <ol class="flow" id="flow"></ol>
+  </section>
+
+  <section id="contact" class="contact">
+    <div>
+      <h2>Say hi</h2>
+      <p>Hiring, or want to talk agents? Email me.</p>
+      <div class="socials" id="socials"></div>
+    </div>
+    <div class="mail">
+      <!-- Replace with your email -->
+      <code id="email">your.email@example.com</code>
+      <button id="copyBtn">copy</button>
+    </div>
+  </section>
+
+  <footer>
+    <span>drawn by hand, coded by hand</span>
+    <span>oct 2026</span>
+  </footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===== Edit content here ===== */
+const SOCIALS = [
+  ['linkedin','https://www.linkedin.com/in/harshit2123/'],
+  ['github','https://github.com/harshit2123'],
+  // ['x','https://x.com/yourhandle'],
+  // ['leetcode','https://leetcode.com/u/yourname'],
+];
+
+/* short: what shows before opening (keep it under ~8 words)
+   feat: shows a screenshot frame; set image:'file.png' when you have one */
+const STOPS = [
+  {year:2026, now:true, type:'work', when:'Aug 2025 – now', title:'Software developer @ UNIQODE',
+   short:'Shipping features for 60k+ users',
+   bullets:[
+     'Custom domains for link pages: routing, verification, org permissions',
+     'Dependabot tracker that uses Claude to decide which PRs are safe to merge',
+     'Daily email digest on Redis + Celery for ~5,000 users',
+     'Threaded comments with @mentions, used by ~20% of users in month one',
+     '250+ Datadog tests that cut post-deploy bugs by ~30%'],
+   stack:'Django REST · Angular · Python · Redis · AWS'},
+
+  {year:2026, type:'project', feat:true, when:'Aug 2026', title:'LLM observability platform',
+   short:'A chatbot that logs every model call',
+   text:"Wrap any model call in one line of the Python SDK and it records latency, tokens and errors. Logs spool to disk first, so a database outage never breaks the chat. Card numbers, emails and phones are redacted before storage.",
+   stack:'FastAPI · PostgreSQL · Redis · React · Docker · 98 tests',
+   url:'llm-observability', links:[['code ↗','https://github.com/harshit2123']]},
+
+  {year:2026, type:'project', feat:true, when:'May – Jun 2026', title:'Lincom',
+   short:'An AI that tames your LinkedIn inbox',
+   text:"Built with Komal Singh. A Chrome extension that sorts invites by intent, labels messages as spam, promo, routine or important, and drafts replies you approve before sending. Your LinkedIn login never leaves the browser.",
+   stack:'React · TypeScript · Node · MongoDB · Claude API',
+   url:'lincom', links:[['website ↗','https://lnkd.in/dG-GCdSi'],['chrome store ↗','https://lnkd.in/df9d4U_8']]},
+
+  {year:2026, type:'milestone', when:'May 2026', title:'OpenAI Codex hackathon',
+   short:'Turned a JS repo into Rust',
+   text:"Selected for the Bengaluru edition. Our tool had Codex read a JavaScript codebase, split it into modules, and rewrite each one in idiomatic Rust.",
+   note:'so many builders in one room!'},
+
+  {year:2026, type:'milestone', when:'Apr 2026', title:'Agentic AI course',
+   short:'8 agent projects in 6 weeks',
+   text:"Built with CrewAI, LangGraph, AutoGen and MCP, including a 44-tool trading floor that runs on its own."},
+
+  {year:2026, type:'project', feat:true, when:'Feb – Apr 2026', title:'Voice support agent',
+   short:'Call it and talk like a human',
+   text:"AssemblyAI hears you, GPT-4.1 Mini decides, Cartesia speaks back, fast enough for a normal chat. When it's stuck it hands off to a human, and learns that answer for next time.",
+   stack:'Python · LiveKit · Next.js · Node · MongoDB',
+   url:'voice-agent', links:[['demo ↗','https://drive.google.com/file/d/1SDNYdZsG7qbtdjEcDrPLzv7P-iffrnhx/view'],['code ↗','https://github.com/harshit2123/agent-app']]},
+
+  {year:2025, type:'milestone', when:'May 2025', title:'Graduated, NIT Bhopal',
+   short:'Electrical engineer who codes',
+   text:"B.Tech in Electrical and Electronics, 8.0 CGPA. I taught myself the software part."},
+
+  {year:2025, type:'work', when:'Feb – Jul 2025', title:'Intern @ UNIQODE',
+   short:'Came in as intern, stayed on',
+   text:"Shipped age gating, deep links, custom browser titles and link analytics to 15,000+ monthly users.",
+   stack:'Django · Angular · Python'},
+
+  {year:2025, type:'project', feat:true, when:'Jan 2025', title:'AI coding helper',
+   short:'Gemini inside a coding site',
+   text:"Chrome extension for the AlgoZenith hackathon. It reads the problem you're on, keeps a chat per problem, and formats code in replies. My most viewed post, by far.",
+   stack:'JavaScript · Gemini API · Chrome extension',
+   url:'maang.in', links:[['demo ↗','https://lnkd.in/gEcMK9rG'],['code ↗','https://github.com/harshit2123']]},
+
+  {year:2024, type:'project', when:'Nov 2024', title:'Whiteboard',
+   short:'Draw anything, undo everything',
+   text:"Canvas app with shapes, arrows, freehand, text and undo/redo.",
+   stack:'React · Canvas · Tailwind', links:[['code ↗','https://github.com/harshit2123']]},
+
+  {year:2024, type:'project', when:'Jul – Aug 2024', title:'Spud',
+   short:'Spots potato diseases from a photo',
+   text:"A CNN with ~95% accuracy, served through FastAPI to Flutter and React apps.",
+   stack:'TensorFlow · FastAPI · Flutter · React', links:[['code ↗','https://github.com/harshit2123']]},
+
+  {year:2024, type:'project', when:'May – Jul 2024', title:'Object counter',
+   short:'Counts and sorts things with YOLO',
+   text:"Flutter app talking to a YOLOv8 model on Azure.",
+   stack:'Flutter · FastAPI · YOLOv8 · Azure', links:[['code ↗','https://github.com/harshit2123']]},
+
+  {year:2024, type:'work', when:'Nov 2023 – Apr 2024', title:'Intern @ StoxHero',
+   short:'Zero Flutter to trading app in 7 weeks',
+   text:"Built their whole stock trading screen with live prices over sockets, for 50k+ users.",
+   note:'first real job!'},
+
+  {year:2023, type:'milestone', when:'Dec 2023', title:'100xDevs cohort',
+   short:'Learned the MERN stack properly'},
+
+  {year:2021, type:'milestone', when:'Jul 2021', title:'Started college',
+   short:'Where it all began',
+   text:"Started grinding DSA here. 900+ problems on LeetCode and Codeforces since."},
+];
+/* ============================= */
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const kindLabel = {project:'project', work:'job', milestone:'milestone'};
+const PLUS = '<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.2 4.5c-.3 5-.2 10 .1 15M4.6 11.8c5-.3 10-.2 15 .2"/></svg>';
+
+document.getElementById('socials').innerHTML = SOCIALS.map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('');
+
+function stop(s, i, side){
+  const id = 'stop-' + i;
+  const hasBody = s.text || s.bullets || s.stack || s.links || s.feat || s.note;
+  return `<li class="row ${side}${s.now ? ' now' : ''}"><span class="dot" aria-hidden="true"></span>
+    <div class="card${s.now ? ' open' : ''}">
+      <button class="head" ${hasBody ? `aria-expanded="${!!s.now}" aria-controls="${id}"` : 'disabled style="cursor:default"'}>
+        <span class="when">${esc(s.when)} <span class="kind ${s.type}">${kindLabel[s.type]}</span></span>
+        <span class="title">${esc(s.title)}</span>
+        <span class="short">${esc(s.short)}</span>
+        ${hasBody ? PLUS : ''}
+      </button>
+      ${hasBody ? `<div class="body" id="${id}"><div><div class="inner">
+        ${s.text ? `<p>${esc(s.text)}</p>` : ''}
+        ${s.bullets ? `<ul>${s.bullets.map(b=>`<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+        ${s.feat ? `<div class="shot"><div class="bar"><i></i><i></i><i></i><span>${esc(s.url||'')}</span></div>
+          <div class="view">${s.image ? `<img src="${esc(s.image)}" alt="Screenshot of ${esc(s.title)}" loading="lazy">` : `<em>screenshot goes here</em>`}</div></div>` : ''}
+        ${s.stack ? `<div class="stack">${esc(s.stack)}</div>` : ''}
+        ${s.links ? `<div class="links">${s.links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>` : ''}
+        ${s.note ? `<span class="note">${esc(s.note)}</span>` : ''}
+      </div></div></div>` : ''}
+    </div></li>`;
+}
+
+const flow = document.getElementById('flow');
+function render(f){
+  let html = '', y = null, side = 0;
+  STOPS.forEach((s, i) => {
+    if (f !== 'all' && s.type !== f) return;
+    if (s.year !== y){ html += `<li class="row"><span class="yr">${s.now && f === 'all' ? 'now' : s.year}</span></li>`; y = s.year; }
+    html += stop(s, i, side++ % 2 ? 'r' : 'l');
+  });
+  flow.innerHTML = '<svg class="line" aria-hidden="true"></svg>' + html;
+  drawLine();
+}
+
+/* pencil line that wiggles through every dot and year */
+function drawLine(){
+  const svg = flow.querySelector('svg.line'); if (!svg) return;
+  const box = flow.getBoundingClientRect();
+  const pts = [...flow.querySelectorAll('.dot, .yr')].map(el => {
+    const b = el.getBoundingClientRect();
+    return [b.left + b.width / 2 - box.left, b.top + b.height / 2 - box.top];
+  });
+  if (!pts.length) { svg.innerHTML = ''; return; }
+  const x0 = pts[0][0], end = [x0, box.height + 10];
+  const all = [[x0, -10], ...pts, end];
+  let d = `M${all[0][0]},${all[0][1]}`;
+  for (let i = 1; i < all.length; i++){
+    const [ax, ay] = all[i-1], [bx, by] = all[i], dy = by - ay, w = (i % 2 ? 1 : -1) * Math.min(26, dy * .25);
+    d += ` C${ax + w},${ay + dy/3} ${bx + w},${by - dy/3} ${bx},${by}`;
+  }
+  svg.setAttribute('width', box.width); svg.setAttribute('height', box.height);
+  svg.innerHTML = `<path d="${d}" fill="none" stroke="var(--graphite)" stroke-width="1.8" stroke-linecap="round" opacity=".8"/>
+    <path d="${d}" fill="none" stroke="var(--graphite)" stroke-width="1" stroke-linecap="round" opacity=".35" transform="translate(1.4,1)"/>`;
+}
+new ResizeObserver(() => drawLine()).observe(flow);
+
+flow.addEventListener('click', e => {
+  const head = e.target.closest('.head[aria-expanded]'); if (!head) return;
+  const card = head.parentElement, open = !card.classList.contains('open');
+  card.classList.toggle('open', open); head.setAttribute('aria-expanded', open);
+});
+
+document.querySelectorAll('.filter button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filter button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  render(b.dataset.f);
+}));
+render('all');
+if (document.fonts) document.fonts.ready.then(drawLine);
+
+const root = document.documentElement;
+try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch(e){}
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('theme', root.dataset.theme); } catch(e){}
+});
+
+const toast = document.getElementById('toast');
+function say(m){ toast.textContent = m; toast.hidden = false; clearTimeout(say.t); say.t = setTimeout(() => toast.hidden = true, 1800); }
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const el = document.getElementById('email');
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); say('selected, press Ctrl+C'); };
+  if (navigator.clipboard) navigator.clipboard.writeText(el.textContent.trim()).then(() => say('copied!'), sel); else sel();
+});
+</script>
