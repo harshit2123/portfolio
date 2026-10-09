@@ -1,6 +1,9 @@
 # Harshit Yadav — Personal Portfolio
 
-One-page personal portfolio website. Plain HTML/CSS/JS in a single `index.html` (no build step, no framework).
+One-page personal portfolio website. Plain HTML/CSS/JS (no build step, no framework). Files:
+- `index.html` — markup only
+- `css/styles.css` — all styles, design tokens on `:root`
+- `js/main.js` — content (`SOCIALS`, `STOPS`) plus rendering and interaction logic
 Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub Pages as a static site.
 
 ## Owner
@@ -28,7 +31,7 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
   learn names of visual problems, even spacing, real images instead of illustrations, one contrasting section.)
 
 ## Where to edit content
-All content lives in the `<script>` at the bottom of index.html:
+All content lives at the top of `js/main.js`:
 - `SOCIALS` — social links (X / LeetCode are commented out, fill in handles)
 - `STOPS` — timeline entries: {year, type: project|work|milestone, when, title, short, text|bullets,
   stack, links, feat (shows screenshot frame), image, url, note (handwritten margin note, keep rare), now}
