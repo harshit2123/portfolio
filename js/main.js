@@ -45,7 +45,7 @@ const STOPS = [
    short:'Call it and talk like a human',
    text:"AssemblyAI hears you, GPT-4.1 Mini decides, Cartesia speaks back, fast enough for a normal chat. When it's stuck it hands off to a human, and learns that answer for next time.",
    stack:'Python · LiveKit · Next.js · Node · MongoDB',
-   images:['images/voice-agent.png'], url:'voice-agent', links:[['demo ↗','https://drive.google.com/file/d/1SDNYdZsG7qbtdjEcDrPLzv7P-iffrnhx/view'],['code ↗','https://github.com/harshit2123/agent-app']]},
+   images:['images/voice-agent.png'], url:'voice-agent', links:[['demo ↗','https://drive.google.com/file/d/1llirDWjo0sRymr-ceWv1DZ__EFRSZv7_/view?usp=sharing'],['older demo ↗','https://drive.google.com/file/d/1SDNYdZsG7qbtdjEcDrPLzv7P-iffrnhx/view'],['code ↗','https://github.com/harshit2123/agent-app']]},
 
   {year:2025, type:'milestone', when:'May 2025', title:'Graduated, NIT Bhopal',
    short:'Electrical engineer who codes',
@@ -58,9 +58,15 @@ const STOPS = [
 
   {year:2025, type:'project', feat:true, when:'Jan 2025', title:'AI coding helper',
    short:'Gemini inside a coding site',
-   text:"Chrome extension for the AlgoZenith hackathon. It reads the problem you're on, keeps a chat per problem, and formats code in replies. My most viewed post, by far.",
+   text:"Built for the AlgoZenith Hackathon: a Chrome extension that brings AI help to maang.in. It detects the problem you're on, keeps a separate chat history for each one, and formats code in replies. Built with a focus on secure, personal API key storage.",
+   bullets:[
+     'Reads the problem context automatically and passes it to the AI',
+     'Separate persistent chat history for every problem',
+     'Formats and highlights code snippets in replies',
+     'Chatbox adapts to any screen size',
+     'Personal API key management with secure storage'],
    stack:'JavaScript · Gemini API · Chrome extension',
-   images:['images/ai-coding-helper.png'], url:'maang.in', links:[['demo ↗','https://lnkd.in/gEcMK9rG'],['code ↗','https://github.com/harshit2123']]},
+   images:['images/ai-coding-helper.png'], url:'maang.in', links:[['video ↗','https://drive.google.com/file/d/1cy2D-lzPTYwFHiJWvVJM-K2fWncqDuBs/view'],['demo ↗','https://lnkd.in/gEcMK9rG'],['code ↗','https://github.com/harshit2123']]},
 
   {year:2024, type:'project', when:'Nov 2024', title:'Whiteboard',
    short:'Draw anything, undo everything',

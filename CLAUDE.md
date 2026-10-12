@@ -38,7 +38,6 @@ All content lives at the top of `js/main.js`:
 - Pictures live in `images/`. Profile photo is `images/profile.png` (hero in index.html).
 
 ## TODO (placeholders still in the page)
-- Email: replace `your.email@example.com`
 - Photo: replace the "HY" placeholder in `.photo` with <img src="me.jpg">
 - Screenshots/GIFs (16:9) for featured projects: set `image:` on each STOP
 - Resume link currently points to LinkedIn — swap for resume PDF
