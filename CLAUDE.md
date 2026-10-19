@@ -21,7 +21,9 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
   down the middle connecting every stop and circled year; cards alternate left/right (stack on left on mobile).
 - Minimal words up front: each card shows only date, type, title and ONE short line (<~8 words).
   Click/tap expands to reveal details, screenshot frame, stack and links. A hand-drawn "+" rotates to "×".
-  NO "show more" text buttons. The current role starts expanded.
+  NO "show more" text buttons. Cards also open by themselves when they reach the middle of the screen and
+  close once fully off-screen (IntersectionObserver in main.js); closing above the screen is compensated with
+  an instant scroll so the reader's view never jumps (native overflow-anchor is turned off for this).
 - Font feel: "writing with a pencil" — Kalam (handwriting) for headings, titles, links, notes;
   IBM Plex Sans for readable body text; IBM Plex Mono for dates/stack lines.
 - Sketchy hand-drawn borders (irregular border-radius), slight card tilt, offset pencil shadow,

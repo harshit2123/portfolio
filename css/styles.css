@@ -17,7 +17,8 @@
   --paper:#1C2028; --accent:#86A9FF; --shadow:rgba(0,0,0,.6);  --hl-project:rgba(134,169,255,.2); --hl-work:rgba(240,190,40,.25); --hl-mile:rgba(240,120,150,.22); color-scheme:dark}
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+/* overflow-anchor off: main.js does its own scroll correction when cards close above the screen */
+html{scroll-behavior:smooth;overflow-anchor:none}
 body{
   background-color:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6;
   background-image:
@@ -110,8 +111,13 @@ h2{font-family:var(--hand);font-weight:700;font-size:34px;line-height:1.1;margin
 .plus{grid-column:2;grid-row:1/4;align-self:center;width:24px;height:24px;color:var(--graphite);transition:transform .25s}
 .card.open .plus{transform:rotate(45deg)}
 
-.body{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .3s ease,visibility .3s}
+.body{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1),visibility .45s}
 .card.open .body{grid-template-rows:1fr;visibility:visible}
+/* details fade in as the card unfolds */
+.inner{opacity:0;transform:translateY(-6px);transition:opacity .4s ease .08s,transform .4s ease .08s}
+.card.open .inner{opacity:1;transform:none}
+/* used when a card closes off-screen: no animation, so the scroll correction is exact */
+.card.instant .body,.card.instant .inner,.card.instant .plus{transition:none}
 .body > div{min-height:0;overflow:hidden}
 .inner{padding:2px 16px 16px;border-top:1.5px dashed var(--faint);margin:0 12px;padding-inline:4px;padding-top:12px}
 .inner p{margin:0;font-size:14.5px;color:var(--ink)}
@@ -127,8 +133,21 @@ h2{font-family:var(--hand);font-weight:700;font-size:34px;line-height:1.1;margin
 .shot .bar span{margin-left:6px;font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* images sit side by side; scroll sideways and each one snaps into view */
 .shot .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--graphite) transparent}
-.shot .view{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:16/9;display:grid;place-items:center;background:repeating-linear-gradient(45deg,transparent 0 8px,var(--grid-major) 8px 9px)}
-.shot .view img{width:100%;height:100%;object-fit:cover;display:block}
+/* each image keeps its own shape and is never cropped: wide screenshots fill the card width,
+   tall photos stop at --shot-max and sit centred on the hatched paper */
+.shot{--shot-max:300px}
+.shot .view{flex:0 0 100%;scroll-snap-align:start;min-height:140px;display:grid;place-items:center;background:repeating-linear-gradient(45deg,transparent 0 8px,var(--grid-major) 8px 9px)}
+.shot .view img{display:block;width:auto;height:auto;max-width:100%;max-height:var(--shot-max)}
+/* arrows on multi-image galleries: light grey circles on the image edges, hidden at either end */
+.gallery{position:relative}
+.nav{position:absolute;top:50%;width:34px;height:34px;margin-top:-17px;padding:6px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;background:rgba(236,238,242,.92);color:#4A4F58;border:1.5px solid rgba(74,79,88,.35);
+  box-shadow:0 1px 4px rgba(0,0,0,.18);transition:opacity .2s,transform .2s}
+.nav svg{width:100%;height:100%}
+.nav:hover{transform:scale(1.08);background:#F4F5F7}
+.nav.prev{left:8px} .nav.prev svg{transform:scaleX(-1)}
+.nav.next{right:8px}
+.nav:disabled{opacity:0;pointer-events:none}
 .shot .view em{font-family:var(--hand);font-style:normal;font-size:17px;color:var(--faint)}
 
 @media (max-width:720px){

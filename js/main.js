@@ -283,6 +283,10 @@ const kindLabel = { project: "project", work: "job", milestone: "milestone" };
 /* hand-drawn + icon; CSS rotates it to × when a card opens */
 const PLUS =
   '<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.2 4.5c-.3 5-.2 10 .1 15M4.6 11.8c5-.3 10-.2 15 .2"/></svg>';
+/* round arrow buttons over a multi-image gallery; CSS mirrors the arrow for "prev" */
+const ARROW =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.8l6.2 6.3-6.1 6.1"/></svg>';
+const GALLERY_NAV = `<button class="nav prev" aria-label="Previous image" disabled>${ARROW}</button><button class="nav next" aria-label="Next image">${ARROW}</button>`;
 
 /* months worked in a job, counted inclusively like LinkedIn; no end = still there */
 function months(s) {
@@ -318,8 +322,8 @@ function stop(s, i, side) {
   const hasBody = s.text || s.bullets || s.stack || s.links || s.feat || s.note;
   const shots = s.images || [];
   return `<li class="row ${side}${s.now ? " now" : ""}"><span class="dot" aria-hidden="true"></span>
-    <div class="card${s.now ? " open" : ""}">
-      <button class="head" ${hasBody ? `aria-expanded="${!!s.now}" aria-controls="${id}"` : 'disabled style="cursor:default"'}>
+    <div class="card">
+      <button class="head" ${hasBody ? `aria-expanded="false" aria-controls="${id}"` : 'disabled style="cursor:default"'}>
         <span class="when">${esc(s.when)}${s.start ? ` · ${fmtMonths(months(s))}` : ""} <span class="kind ${s.type}">${kindLabel[s.type]}</span></span>
         <span class="title">${esc(s.title)}</span>
         <span class="short">${esc(s.short)}</span>
@@ -333,7 +337,7 @@ function stop(s, i, side) {
         ${
           s.feat
             ? `<div class="shot"><div class="bar"><i></i><i></i><i></i><span>${esc(s.url || "")}</span></div>
-          <div class="track">${shots.map((src) => `<div class="view"><img src="${esc(src)}" alt="Screenshot of ${esc(s.title)}" loading="lazy"></div>`).join("") || '<div class="view"><em>screenshot goes here</em></div>'}</div></div>`
+          <div class="gallery"><div class="track">${shots.map((src) => `<div class="view"><img src="${esc(src)}" alt="Screenshot of ${esc(s.title)}" loading="lazy"></div>`).join("") || '<div class="view"><em>screenshot goes here</em></div>'}</div>${shots.length > 1 ? GALLERY_NAV : ""}</div></div>`
             : ""
         }
         ${s.stack ? `<div class="stack">${esc(s.stack)}</div>` : ""}
@@ -364,6 +368,44 @@ function render(f) {
   });
   flow.innerHTML = '<svg class="line" aria-hidden="true"></svg>' + html;
   drawLine();
+  watchCards();
+}
+
+/* ---- cards open and close themselves as you scroll ---- */
+function setOpen(card, open) {
+  card.classList.toggle("open", open);
+  card.querySelector(".head").setAttribute("aria-expanded", open);
+}
+
+/* a card opens when it reaches the middle band of the screen */
+const focusWatcher = new IntersectionObserver(
+  (entries) => entries.forEach((e) => e.isIntersecting && setOpen(e.target, true)),
+  { rootMargin: "-45% 0px -45% 0px" },
+);
+
+/* ...and closes once it is completely off-screen. Closing a card ABOVE the screen would pull
+   everything up, so it closes instantly and the page scrolls back by the height it lost */
+const leaveWatcher = new IntersectionObserver((entries) =>
+  entries.forEach((e) => {
+    const card = e.target;
+    if (e.isIntersecting || !card.classList.contains("open")) return;
+    const before = card.offsetHeight;
+    card.classList.add("instant");
+    setOpen(card, false);
+    if (e.boundingClientRect.top < 0)
+      window.scrollBy({ top: card.offsetHeight - before, behavior: "instant" });
+    requestAnimationFrame(() => card.classList.remove("instant"));
+  }),
+);
+
+/* (re)attach both watchers to every card that has something to open */
+function watchCards() {
+  focusWatcher.disconnect();
+  leaveWatcher.disconnect();
+  flow.querySelectorAll(".head[aria-expanded]").forEach((head) => {
+    focusWatcher.observe(head.parentElement);
+    leaveWatcher.observe(head.parentElement);
+  });
 }
 
 /* pencil line that wiggles through every dot and year */
@@ -402,11 +444,33 @@ new ResizeObserver(() => drawLine()).observe(flow);
 flow.addEventListener("click", (e) => {
   const head = e.target.closest(".head[aria-expanded]");
   if (!head) return;
-  const card = head.parentElement,
-    open = !card.classList.contains("open");
-  card.classList.toggle("open", open);
-  head.setAttribute("aria-expanded", open);
+  const card = head.parentElement;
+  setOpen(card, !card.classList.contains("open"));
 });
+
+/* gallery arrows: scroll one image left or right */
+flow.addEventListener("click", (e) => {
+  const nav = e.target.closest(".nav");
+  if (!nav) return;
+  const track = nav.parentElement.querySelector(".track");
+  const dir = nav.classList.contains("next") ? 1 : -1;
+  track.scrollBy({ left: dir * track.clientWidth, behavior: "smooth" });
+});
+
+/* disable an arrow when there's nothing more that way; scroll events don't bubble, so listen in capture */
+flow.addEventListener(
+  "scroll",
+  (e) => {
+    const track = e.target;
+    const prev = track.classList?.contains("track") && track.parentElement.querySelector(".prev");
+    if (!prev) return;
+    const edge = 4;
+    prev.disabled = track.scrollLeft < edge;
+    track.parentElement.querySelector(".next").disabled =
+      track.scrollLeft + track.clientWidth > track.scrollWidth - edge;
+  },
+  true,
+);
 
 /* filter buttons: mark the pressed one and re-render the timeline */
 document.querySelectorAll(".filter button").forEach((b) =>
