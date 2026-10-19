@@ -8,7 +8,10 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
 
 ## Owner
 - Harshit Yadav — AI Full-Stack Engineer, Bengaluru
-- Software Developer @ UNIQODE (Aug 2025–now), intern there Feb–Jul 2025
+- Full-stack Developer @ UNIQODE (Feb 2025–now; shown as one role, no separate intern card)
+- Flutter Developer @ StoxHero (Jun 2023–May 2024)
+- Also shown in jobs but NOT counted in total experience (no start/end): options trader @ StoxHero
+  (Dec 2022–May 2023, ₹90K profit on ₹5L), YouTube growth manager @ ninepointer edtech (Jul–Dec 2022)
 - B.Tech EEE, NIT Bhopal (2021–2025, 8.0 CGPA)
 - LinkedIn: https://www.linkedin.com/in/harshit2123/
 - GitHub: https://github.com/harshit2123
@@ -34,11 +37,10 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
 All content lives at the top of `js/main.js`:
 - `SOCIALS` — social links (X / LeetCode are commented out, fill in handles)
 - `STOPS` — timeline entries: {year, type: project|work|milestone, when, title, short, text|bullets,
-  stack, links, feat (shows screenshot frame), images (list of paths in `images/`), url, note (handwritten margin note, keep rare), now}
+  stack, links, feat (shows screenshot frame), images (list of paths in `images/`), url, note (handwritten margin note, keep rare), now,
+  start/end ([year, month] on jobs; durations and the total experience in the hero + jobs view are computed from these)}
 - Pictures live in `images/`. Profile photo is `images/profile.png` (hero in index.html).
 
 ## TODO (placeholders still in the page)
-- Photo: replace the "HY" placeholder in `.photo` with <img src="me.jpg">
-- Screenshots/GIFs (16:9) for featured projects: set `image:` on each STOP
 - Resume link currently points to LinkedIn — swap for resume PDF
-- Exact live/GitHub URLs for Whiteboard, Spud, Object counter, LLM observability, AI coding helper
+- Exact live/GitHub URLs for Whiteboard, Spud, Object counter, AI coding helper

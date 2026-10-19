@@ -7,23 +7,34 @@ const SOCIALS = [
 ];
 
 /* short: what shows before opening (keep it under ~8 words)
-   feat: shows a screenshot frame; images:['images/file.png', ...] lists its pictures */
+   feat: shows a screenshot frame; images:['images/file.png', ...] lists its pictures
+   start/end: [year, month] on jobs; adds the duration to the card and the total experience (no end = still there) */
 const STOPS = [
-  {year:2026, now:true, type:'work', when:'Aug 2025 – now', title:'Software developer @ UNIQODE',
+  {year:2026, now:true, type:'work', start:[2025,2], when:'Feb 2025 – now', title:'Full-stack developer @ UNIQODE',
    short:'Shipping features for 60k+ users',
    bullets:[
-     'Custom domains for link pages: routing, verification, org permissions',
-     'Dependabot tracker that uses Claude to decide which PRs are safe to merge',
-     'Daily email digest on Redis + Celery for ~5,000 users',
-     'Threaded comments with @mentions, used by ~20% of users in month one',
-     '250+ Datadog tests that cut post-deploy bugs by ~30%'],
-   stack:'Django REST · Angular · Python · Redis · AWS', feat:true, images:['images/uniqode-values.jpeg']},
+     'Built a Dependabot vulnerability tracker that uses the Claude API to triage dependency updates and make safe-to-merge calls across 48 AWS Lambda functions',
+     'Architected LinkPage domain management: multi-domain routing, custom domain verification, org-level access control and admin workflows for a 60K+ user platform',
+     'Built a domain migration bridge from the legacy Polo platform to Uniqode, remapping DNS and config across systems. It unlocked a $20K customer deal within a week',
+     'Engineered a watchlist system with async daily digest pipelines on Redis + Celery, sending link analytics to 5,000+ active users a day',
+     'Designed threaded comments with @mentions and real-time updates on shared links, adopted by ~20% of active users in the first month',
+     'Shipped age gating, browser titles, deep links and link analytics to ~15,000 monthly active users',
+     'Wrote 250+ Datadog synthetic tests across UI flows, REST APIs and end-to-end journeys, cutting post-deploy issues by 30%'],
+   stack:'Python · Django REST · React · Redis · Celery · AWS Lambda · LocalStack · GitHub API · Claude API · Datadog',
+   feat:true, images:['images/uniqode-values.jpeg']},
 
   {year:2026, type:'project', feat:true, when:'Aug 2026', title:'LLM observability platform',
    short:'A chatbot that logs every model call',
-   text:"Wrap any model call in one line of the Python SDK and it records latency, tokens and errors. Logs spool to disk first, so a database outage never breaks the chat. Card numbers, emails and phones are redacted before storage.",
+   text:"An observability platform with a chatbot attached. Every model call is captured automatically: provider, model, latency, tokens, status and errors. Logs spool to disk first, so telemetry never slows the chat or breaks when the database is down. Cards, emails and phone numbers are redacted before storage, and everything shows on a dashboard.",
+   bullets:[
+     'Works with OpenRouter, Anthropic and a mock provider',
+     'Streaming chat with a two-sided cancel button',
+     'Latency, throughput and error charts',
+     'PII redaction with Luhn-validated card numbers',
+     'One command to run: docker compose up'],
    stack:'FastAPI · PostgreSQL · Redis · React · Docker · 98 tests',
-   url:'llm-observability', links:[['code ↗','https://github.com/harshit2123']]},
+   url:'Chatbot-App', links:[['video ↗','https://www.loom.com/share/c52103f08d4d477fa04ec899ce3d168f'],['code ↗','https://github.com/harshit2123/Chatbot-App']],
+   images:['images/llm-observability.png']},
 
   {year:2026, type:'project', feat:true, when:'May – Jun 2026', title:'Lincom',
    short:'An AI that tames your LinkedIn inbox',
@@ -50,11 +61,6 @@ const STOPS = [
   {year:2025, type:'milestone', when:'May 2025', title:'Graduated, NIT Bhopal',
    short:'Electrical engineer who codes',
    text:"B.Tech in Electrical and Electronics, 8.0 CGPA. I taught myself the software part."},
-
-  {year:2025, type:'work', when:'Feb – Jul 2025', title:'Intern @ UNIQODE',
-   short:'Came in as intern, stayed on',
-   text:"Shipped age gating, deep links, custom browser titles and link analytics to 15,000+ monthly users.",
-   stack:'Django · Angular · Python'},
 
   {year:2025, type:'project', feat:true, when:'Jan 2025', title:'AI coding helper',
    short:'Gemini inside a coding site',
@@ -83,13 +89,39 @@ const STOPS = [
    text:"Flutter app talking to a YOLOv8 model on Azure.",
    stack:'Flutter · FastAPI · YOLOv8 · Azure', links:[['code ↗','https://github.com/harshit2123']]},
 
-  {year:2024, type:'work', when:'Nov 2023 – Apr 2024', title:'Intern @ StoxHero',
-   short:'Zero Flutter to trading app in 7 weeks',
-   text:"Built their whole stock trading screen with live prices over sockets, for 50k+ users.",
-   note:'first real job!'},
+  {year:2024, type:'work', start:[2023,6], end:[2024,5], when:'Jun 2023 – May 2024', title:'Flutter developer @ StoxHero',
+   short:'Real-time stock trading on iOS + Android',
+   bullets:[
+     'Built a real-time stock trading module with live market data feeds, lifting user engagement 25% and transaction frequency 30% within three months',
+     'One Flutter codebase for iOS and Android, with Dio for backend APIs and WebSockets for instant price updates',
+     'Owned critical features of the trading module, about 8–9% of the entire app codebase'],
+   stack:'Flutter · Dart · Dio · WebSockets · REST APIs',
+   note:'first dev job!'},
 
   {year:2023, type:'milestone', when:'Dec 2023', title:'100xDevs cohort',
    short:'Learned the MERN stack properly'},
+
+  /* the next two have no start/end on purpose: they show versatility but don't count toward total experience */
+  {year:2023, type:'work', when:'Dec 2022 – May 2023 · 6 mos', title:'Options trader @ StoxHero',
+   short:'₹90K profit on ₹5L in six months',
+   bullets:[
+     'Traded Nifty and Bank Nifty index options intraday for six months, before moving to the app team',
+     'Took entries on 9 EMA / 15 EMA crossovers, confirmed with price action: support and resistance, breakouts and candlestick structure',
+     'Checked volume and open interest (OI) build-up before every trade to make sure a move had real participation behind it',
+     'Picked strikes by moneyness: ATM and slightly ITM options for higher delta, staying away from deep OTM contracts that bleed to theta decay',
+     'Set the stop-loss and position size before each entry; grew ₹5 lakh of capital by ₹90,000, an 18% return in six months',
+     'Learned the trader side of the product first-hand, which shaped the trading app I built next'],
+   stack:'Index options · ITM / ATM / OTM · 9 & 15 EMA · Price action · Volume · Open interest · Risk management'},
+
+  {year:2022, type:'work', when:'Jul – Dec 2022 · 6 mos', title:'Product & growth manager @ ninepointer',
+   short:'Product + YouTube growth for an edtech',
+   bullets:[
+     'Owned YouTube growth for an edtech platform: content strategy, publishing cadence and audience growth',
+     'Ran YouTube SEO: keyword research, then titles, descriptions, tags, chapters and thumbnails written to rank in search and suggested videos',
+     'Ran video operations end to end, from topic research and scripts to recording, editing and a weekly content calendar, coordinating creators and editors',
+     'Read YouTube Analytics (impressions, click-through rate, watch time, retention) to decide what to make next',
+     'Worked as product manager on the platform: turned learner and creator feedback into feature requirements and prioritised them with the dev team'],
+   stack:'Product management · YouTube SEO · Keyword research · YouTube Analytics · Content strategy · Video operations'},
 
   {year:2021, type:'milestone', when:'Jul 2021', title:'Started college',
    short:'Where it all began',
@@ -104,6 +136,18 @@ const kindLabel = {project:'project', work:'job', milestone:'milestone'};
 /* hand-drawn + icon; CSS rotates it to × when a card opens */
 const PLUS ='<svg class="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.2 4.5c-.3 5-.2 10 .1 15M4.6 11.8c5-.3 10-.2 15 .2"/></svg>';
 
+/* months worked in a job, counted inclusively like LinkedIn; no end = still there */
+function months(s){
+  const now = new Date(), [ey, em] = s.end || [now.getFullYear(), now.getMonth() + 1];
+  return (ey - s.start[0]) * 12 + em - s.start[1] + 1;
+}
+/* 21 -> "1 yr 9 mos" */
+const fmtMonths = m => [[Math.floor(m / 12), 'yr'], [m % 12, 'mo']]
+  .filter(([n]) => n).map(([n, u]) => `${n} ${u}${n > 1 ? 's' : ''}`).join(' ');
+/* total experience across every job with a start date, shown wherever [data-exp] appears */
+const TOTAL_EXP = fmtMonths(STOPS.filter(s => s.start).reduce((t, s) => t + months(s), 0));
+document.querySelectorAll('[data-exp]').forEach(el => el.textContent = TOTAL_EXP);
+
 /* render social links into the contact section */
 document.getElementById('socials').innerHTML = SOCIALS.map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join('');
 
@@ -115,7 +159,7 @@ function stop(s, i, side){
   return `<li class="row ${side}${s.now ? ' now' : ''}"><span class="dot" aria-hidden="true"></span>
     <div class="card${s.now ? ' open' : ''}">
       <button class="head" ${hasBody ? `aria-expanded="${!!s.now}" aria-controls="${id}"` : 'disabled style="cursor:default"'}>
-        <span class="when">${esc(s.when)} <span class="kind ${s.type}">${kindLabel[s.type]}</span></span>
+        <span class="when">${esc(s.when)}${s.start ? ` · ${fmtMonths(months(s))}` : ''} <span class="kind ${s.type}">${kindLabel[s.type]}</span></span>
         <span class="title">${esc(s.title)}</span>
         <span class="short">${esc(s.short)}</span>
         ${hasBody ? PLUS : ''}
@@ -135,7 +179,7 @@ function stop(s, i, side){
 const flow = document.getElementById('flow');
 /* draw the timeline for a filter: 'all', 'project', 'work' or 'milestone' */
 function render(f){
-  let html = '', y = null, side = 0;
+  let html = f === 'work' ? `<li class="row"><p class="total"><b>${TOTAL_EXP}</b> of work experience in total</p></li>` : '', y = null, side = 0;
   STOPS.forEach((s, i) => {
     if (f !== 'all' && s.type !== f) return;
     if (s.year !== y){ html += `<li class="row"><span class="yr">${s.now && f === 'all' ? 'now' : s.year}</span></li>`; y = s.year; }
