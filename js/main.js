@@ -2,7 +2,7 @@
 const SOCIALS = [
   ["linkedin", "https://www.linkedin.com/in/harshit2123/"],
   ["github", "https://github.com/harshit2123"],
-  // ['x','https://x.com/yourhandle'],
+  ["x / twitter", "https://x.com/HarshitStack"],
   // ['leetcode','https://leetcode.com/u/yourname'],
 ];
 
@@ -368,7 +368,7 @@ function render(f) {
   });
   flow.innerHTML = '<svg class="line" aria-hidden="true"></svg>' + html;
   drawLine();
-  watchCards();
+  syncCards();
 }
 
 /* ---- cards open and close themselves as you scroll ---- */
@@ -377,36 +377,40 @@ function setOpen(card, open) {
   card.querySelector(".head").setAttribute("aria-expanded", open);
 }
 
-/* a card opens when it reaches the middle band of the screen */
-const focusWatcher = new IntersectionObserver(
-  (entries) => entries.forEach((e) => e.isIntersecting && setOpen(e.target, true)),
-  { rootMargin: "-45% 0px -45% 0px" },
-);
+/* scroll-open only on desktop (wide screen + mouse/trackpad, same 720px breakpoint as the CSS);
+   phones and tablets stay tap-to-open */
+const desktop = matchMedia("(min-width: 721px) and (hover: hover) and (pointer: fine)");
 
-/* ...and closes once it is completely off-screen. Closing a card ABOVE the screen would pull
-   everything up, so it closes instantly and the page scrolls back by the height it lost */
-const leaveWatcher = new IntersectionObserver((entries) =>
-  entries.forEach((e) => {
-    const card = e.target;
-    if (e.isIntersecting || !card.classList.contains("open")) return;
-    const before = card.offsetHeight;
-    card.classList.add("instant");
-    setOpen(card, false);
-    if (e.boundingClientRect.top < 0)
-      window.scrollBy({ top: card.offsetHeight - before, behavior: "instant" });
-    requestAnimationFrame(() => card.classList.remove("instant"));
-  }),
-);
+const MIDDLE = 0.45; // the "middle" of the screen is the band from 45% to 55% of its height
+const inMiddle = (r) => r.top < innerHeight * (1 - MIDDLE) && r.bottom > innerHeight * MIDDLE;
 
-/* (re)attach both watchers to every card that has something to open */
-function watchCards() {
-  focusWatcher.disconnect();
-  leaveWatcher.disconnect();
+/* Closing a card ABOVE the screen would pull everything up, so it closes instantly
+   (no animation) and the page scrolls back by exactly the height it lost */
+function closeOffscreen(card, above) {
+  const before = card.offsetHeight;
+  card.classList.add("instant");
+  setOpen(card, false);
+  if (above) window.scrollBy({ top: card.offsetHeight - before, behavior: "instant" });
+  requestAnimationFrame(() => card.classList.remove("instant"));
+}
+
+/* runs on every scroll: a card opens when it ENTERS the middle (so a card you closed by hand
+   stays closed while you read), and an open card closes once it is fully off-screen */
+function syncCards() {
+  if (!desktop.matches) return;
   flow.querySelectorAll(".head[aria-expanded]").forEach((head) => {
-    focusWatcher.observe(head.parentElement);
-    leaveWatcher.observe(head.parentElement);
+    const card = head.parentElement;
+    const r = card.getBoundingClientRect();
+    const mid = inMiddle(r);
+    if (mid && !card.dataset.mid) setOpen(card, true);
+    card.dataset.mid = mid ? "1" : "";
+    const offscreen = r.bottom <= 0 || r.top >= innerHeight;
+    if (offscreen && card.classList.contains("open")) closeOffscreen(card, r.bottom <= 0);
   });
 }
+addEventListener("scroll", syncCards, { passive: true });
+/* resizing the window across the breakpoint switches the mode */
+desktop.addEventListener("change", syncCards);
 
 /* pencil line that wiggles through every dot and year */
 function drawLine() {

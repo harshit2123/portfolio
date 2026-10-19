@@ -21,9 +21,10 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
   down the middle connecting every stop and circled year; cards alternate left/right (stack on left on mobile).
 - Minimal words up front: each card shows only date, type, title and ONE short line (<~8 words).
   Click/tap expands to reveal details, screenshot frame, stack and links. A hand-drawn "+" rotates to "×".
-  NO "show more" text buttons. Cards also open by themselves when they reach the middle of the screen and
-  close once fully off-screen (IntersectionObserver in main.js); closing above the screen is compensated with
-  an instant scroll so the reader's view never jumps (native overflow-anchor is turned off for this).
+  NO "show more" text buttons. DESKTOP ONLY (>720px + mouse/trackpad): cards also open by themselves when they
+  enter the middle of the screen and close once fully off-screen (`syncCards` on scroll in main.js); closing above
+  the screen is compensated with an instant scroll so the reader's view never jumps (native overflow-anchor is off).
+  Phones/tablets: tap to open only.
 - Font feel: "writing with a pencil" — Kalam (handwriting) for headings, titles, links, notes;
   IBM Plex Sans for readable body text; IBM Plex Mono for dates/stack lines.
 - Sketchy hand-drawn borders (irregular border-radius), slight card tilt, offset pencil shadow,
@@ -37,7 +38,7 @@ Open `index.html` in a browser to preview. Deploy to Vercel / Netlify / GitHub P
 
 ## Where to edit content
 All content lives at the top of `js/main.js`:
-- `SOCIALS` — social links (X / LeetCode are commented out, fill in handles)
+- `SOCIALS` — social links (LeetCode is commented out, fill in the handle)
 - `STOPS` — timeline entries: {year, type: project|work|milestone, when, title, short, text|bullets,
   stack, links, feat (shows screenshot frame), images (list of paths in `images/`), url, note (handwritten margin note, keep rare), now,
   start/end ([year, month] on jobs; durations and the total experience in the hero + jobs view are computed from these)}
